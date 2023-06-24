@@ -10,6 +10,19 @@ class ScreenOne extends StatefulWidget {
 }
 
 class _ScreenOneState extends State<ScreenOne> {
+  var _input;
+
+  @override
+  void initState(){
+    super.initState();
+    _input = TextEditingController();
+  }
+
+  @override
+  void dispose(){
+    _input.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +38,7 @@ class _ScreenOneState extends State<ScreenOne> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.93,
                   child: TextField(
-                    // controller: ,
+                    controller: _input,
                   )),),
             ),
             SizedBox(
@@ -34,16 +47,7 @@ class _ScreenOneState extends State<ScreenOne> {
                   onPressed: (){
                     Navigator.of(context).pushNamed(
                         ScreenTwo.routeName,
-                        arguments: [
-                              "Navigation is working",
-                              "Navigation is working"
-                              "Navigation is working"
-                              "Navigation is working"
-                              "Navigation is working"
-                              "Navigation is working"
-                              "Navigation is working"
-                        ],
-
+                        arguments: _input.text,
                     );
                   },
                   style: ButtonStyle(
@@ -51,7 +55,7 @@ class _ScreenOneState extends State<ScreenOne> {
                       RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)
                       )
                     )
-                  ), child: Text("Next"),
+                  ), child: Text("Next")
                 ))
           ],
         ),
