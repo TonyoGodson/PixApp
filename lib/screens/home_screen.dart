@@ -8,6 +8,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List <int> dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(10.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0
           ),
-          children: [],
+          children: dummyList.map((e) => Card(
+            color: Colors.blue,
+            elevation: 30.0,
+            shadowColor: Colors.blue,
+            child: Center(
+                child: Text("$e", style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center,)),
+          )).toList(),
         ),
       ),
     );
