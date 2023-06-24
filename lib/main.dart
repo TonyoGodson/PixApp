@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pix_app/screens/home_screen.dart';
+import 'package:pix_app/screens/screen_one.dart';
+import 'package:pix_app/screens/screen_two.dart';
 
 
 void main(){
@@ -17,6 +19,11 @@ class _PixAppState extends State<PixApp> {
   Widget build(BuildContext context) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
-      home: HomeScreen());
+      home: HomeScreen(),
+    routes: {
+      ScreenOne.routeName : (BuildContext context) => ScreenOne(),
+      ScreenTwo.routeName: (BuildContext context) => ScreenTwo(),
+    },
+  );
   }
 }
