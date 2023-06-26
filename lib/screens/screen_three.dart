@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'model/task.dart';
 
 class ScreenThree extends StatefulWidget {
   static const routeName = '/screen_three';
@@ -10,9 +15,37 @@ class ScreenThree extends StatefulWidget {
 }
 
 class _ScreenThreeState extends State<ScreenThree> {
+
+  var _enterTask;
+  void saveData() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Task task = Task.fromString(_enterTask.text);
+    // prefs.setString('task', jsonEncode(task.getMap()));
+    // _enterTask.text = "";
+    // prefs.remove('task');
+
+    String? tasks = prefs.getString('task');
+    List list = (tasks == null) ? [] : json.decode(tasks);
+    list.add(json.encode(task.getMap()));
+    print(list);
+    prefs.setString('tasks', json.encode(list));
+    _enterTask.text = '';
+    Navigator.of(context).pop();
+  }
+  @override
+  void initState(){
+    super.initState();
+    _enterTask = TextEditingController();
+  }
+  @override
+  void dispose(){
+    _enterTask.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text("Screen Three"),
         centerTitle: true,
@@ -28,85 +61,97 @@ class _ScreenThreeState extends State<ScreenThree> {
         child: Icon(Icons.add),
         onPressed: () => showModalBottomSheet(
             backgroundColor: Colors.transparent,
+            isScrollControlled: true,
             context: context,
-            builder: (BuildContext context) => Container(
-                  height: 250,
-                  padding: EdgeInsets.all(15.0),
-                  decoration: const BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Add Task Pane",
-                            style:
-                                TextStyle(fontSize: 20.0, color: Colors.white),
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ))
-                        ],
-                      ),
-                      const Divider(thickness: 2, color: Colors.white,),
-                      const SizedBox(height: 20),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.transparent)),
-                        child: TextField(
-                          style: TextStyle(fontSize: 20),
-                          decoration: InputDecoration(
-                            hintText: "Enter Task",
-                            filled: false,
-                            border: InputBorder.none,
+            builder: (BuildContext context) => Padding(
+              padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Container(
+                    height: 250,
+                    padding: EdgeInsets.all(15.0),
+                    decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Add Task Pane",
+                              style:
+                                  TextStyle(fontSize: 20.0, color: Colors.white),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ))
+                          ],
+                        ),
+                        const Divider(thickness: 2, color: Colors.white,),
+                        const SizedBox(height: 20),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15.0),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.transparent)),
+                          child: TextField(
+                            autofocus: true,
+                            controller: _enterTask,
+                            style: TextStyle(fontSize: 20),
+                            decoration: InputDecoration(
+                              hintText: "Enter Task",
+                              filled: false,
+                              border: InputBorder.none,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 90,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(children: [
-                          Expanded(
-                            child: Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: ElevatedButton(
-                                  child: const Text("Clear", style: TextStyle(color: Colors.blue)),
+                        SizedBox(
+                          height: 90,
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(children: [
+                            Expanded(
+                              child: Padding(
+                                  padding: const EdgeInsets.only(right: 5),
+                                  child: ElevatedButton(
+                                    child: const Text("Clear", style: TextStyle(color: Colors.blue)),
+                                      style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
+                                      ),
+                                    onPressed: () {
+                                      _enterTask.text = "";
+                                    },
+                                  )),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                  padding: const EdgeInsets.only(right: 5),
+                                  child: ElevatedButton(
                                     style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
+                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
                                     ),
-                                  onPressed: () {},
-                                )),
-                          ),
-                          Expanded(
-                            child: Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
-                                  ),
-                                  child: const Text("Ok", style: TextStyle(color: Colors.blue)),
-                                  onPressed: () {},
-                                )),
-                          ),
-                        ]),
-                      ),
-                    ],
+                                    child: const Text("Ok", style: TextStyle(color: Colors.blue)),
+                                    onPressed: () {
+                                      saveData();
+                                    },
+                                  )),
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
                   ),
-                )),
+            )),
       ),
     );
   }
