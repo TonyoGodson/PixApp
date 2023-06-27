@@ -15,33 +15,45 @@ class ScreenThree extends StatefulWidget {
 }
 
 class _ScreenThreeState extends State<ScreenThree> {
-
   var _enterTask;
-  void saveData() async{
+  late List<Task> _tasks;
+
+  void saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Task task = Task.fromString(_enterTask.text);
-    // prefs.setString('task', jsonEncode(task.getMap()));
-    // _enterTask.text = "";
-    // prefs.remove('task');
-
     String? tasks = prefs.getString('task');
     List list = (tasks == null) ? [] : json.decode(tasks);
     list.add(json.encode(task.getMap()));
     print(list);
-    prefs.setString('tasks', json.encode(list));
+    prefs.setString('task', json.encode(list));
     _enterTask.text = '';
     Navigator.of(context).pop();
   }
+
+  void _getTasks() async {
+    _tasks = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? tasks = prefs.getString('task');
+    List list = (tasks == null) ? [] : json.decode(tasks);
+    for (dynamic d in list) {
+      _tasks.add(Task.fromMap(json.decode(d)));
+    }
+    print(_tasks);
+  }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _enterTask = TextEditingController();
+    _getTasks();
   }
+
   @override
-  void dispose(){
+  void dispose() {
     _enterTask.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +68,38 @@ class _ScreenThreeState extends State<ScreenThree> {
           },
         ),
       ),
-      body: Center(child: Text("Screen three")),
+      body: (_tasks == null || _tasks == "")
+          ? Center(child: Text("Screen three"))
+          : SingleChildScrollView(
+            child: Column(
+                children: _tasks
+                    .map((e) => Container(
+                          margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                          height: 50.0,
+                          alignment: Alignment.centerLeft,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1.0
+                            )
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(e.task),
+                                Checkbox(value: false, onChanged: (bool? value) {
+                                  setState(() {
+                                    value: true;
+                                  });
+                                },)
+                              ]),
+                        ))
+                    .toList(),
+              ),
+          ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => showModalBottomSheet(
@@ -64,9 +107,9 @@ class _ScreenThreeState extends State<ScreenThree> {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) => Padding(
-              padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Container(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Container(
                     height: 250,
                     padding: EdgeInsets.all(15.0),
                     decoration: const BoxDecoration(
@@ -83,8 +126,8 @@ class _ScreenThreeState extends State<ScreenThree> {
                           children: [
                             Text(
                               "Add Task Pane",
-                              style:
-                                  TextStyle(fontSize: 20.0, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 20.0, color: Colors.white),
                             ),
                             GestureDetector(
                                 onTap: () {
@@ -96,7 +139,10 @@ class _ScreenThreeState extends State<ScreenThree> {
                                 ))
                           ],
                         ),
-                        const Divider(thickness: 2, color: Colors.white,),
+                        const Divider(
+                          thickness: 2,
+                          color: Colors.white,
+                        ),
                         const SizedBox(height: 20),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -124,10 +170,12 @@ class _ScreenThreeState extends State<ScreenThree> {
                               child: Padding(
                                   padding: const EdgeInsets.only(right: 5),
                                   child: ElevatedButton(
-                                    child: const Text("Clear", style: TextStyle(color: Colors.blue)),
-                                      style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
-                                      ),
+                                    child: const Text("Clear",
+                                        style: TextStyle(color: Colors.blue)),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white)),
                                     onPressed: () {
                                       _enterTask.text = "";
                                     },
@@ -138,12 +186,13 @@ class _ScreenThreeState extends State<ScreenThree> {
                                   padding: const EdgeInsets.only(right: 5),
                                   child: ElevatedButton(
                                     style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
-                                    ),
-                                    child: const Text("Ok", style: TextStyle(color: Colors.blue)),
-                                    onPressed: () {
-                                      saveData();
-                                    },
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white)),
+                                    child: const Text("Ok",
+                                        style: TextStyle(color: Colors.blue)),
+                                    onPressed: () =>
+                                      saveData(),
                                   )),
                             ),
                           ]),
@@ -151,7 +200,7 @@ class _ScreenThreeState extends State<ScreenThree> {
                       ],
                     ),
                   ),
-            )),
+                )),
       ),
     );
   }
