@@ -20,7 +20,7 @@ class Task {
   Map<String, dynamic> getMap(){
     return {
       'task': this.task,
-      'time': this.time.microsecondsSinceEpoch,
+      'time': this.time.millisecondsSinceEpoch,
     };
   }
 }

@@ -25,6 +25,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
     } catch (e){
       print(e);
     }
+    return null;
   }
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,16 @@ class _ScreenTwoState extends State<ScreenTwo> {
     }
     var s_OneArg = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
-      appBar: AppBar(title: Text("Screen Two"), centerTitle: true, leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){ Navigator.of(context).pop();},),),
+      appBar: AppBar(
+        title: Text("Screen Two"),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+              Icons.arrow_back
+          ),
+          onPressed: (){
+            Navigator.of(context).pop();
+            },),),
       body: Center(
         child: Container(child:
         Column(

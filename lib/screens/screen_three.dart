@@ -17,6 +17,7 @@ class ScreenThree extends StatefulWidget {
 class _ScreenThreeState extends State<ScreenThree> {
   var _enterTask;
   late List<Task> _tasks;
+  late List<bool> _taskDone;
 
   void saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,17 +29,34 @@ class _ScreenThreeState extends State<ScreenThree> {
     prefs.setString('task', json.encode(list));
     _enterTask.text = '';
     Navigator.of(context).pop();
+    setState(() {});
   }
 
   void _getTasks() async {
     _tasks = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.remove('task');
     String? tasks = prefs.getString('task');
     List list = (tasks == null) ? [] : json.decode(tasks);
     for (dynamic d in list) {
       _tasks.add(Task.fromMap(json.decode(d)));
     }
     print(_tasks);
+    _taskDone = List.generate(_tasks.length, (index) => false);
+    setState(() {});
+  }
+
+  void updateTaskList() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // List<Task> updateList = [];
+    // for(var i = 0; i < _tasks.length; i++){
+    //   if(!_taskDone[i]) updateList.add(_tasks[i]);
+    // }
+    // var pendingListEncoded = List.generate(
+    //     updateList.length,
+    //     (i) => json.encode(updateList[i].getMap()));
+    // prefs.setString('task', json.encode(pendingListEncoded));
+    // _getTasks();
   }
 
   @override
@@ -67,6 +85,11 @@ class _ScreenThreeState extends State<ScreenThree> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+              onPressed: updateTaskList,
+              icon: Icon(Icons.save)
+          )],
       ),
       body: (_tasks == null || _tasks == "")
           ? Center(child: Text("Screen three"))
@@ -90,9 +113,12 @@ class _ScreenThreeState extends State<ScreenThree> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(e.task),
-                                Checkbox(value: false, onChanged: (bool? value) {
+                                Checkbox(
+                                  key: GlobalKey(),
+                                  value: _taskDone[_tasks.indexOf(e)],
+                                  onChanged: (val) {
                                   setState(() {
-                                    value: true;
+                                    _taskDone[_tasks.indexOf(e)] = val!;
                                   });
                                 },)
                               ]),
@@ -191,9 +217,9 @@ class _ScreenThreeState extends State<ScreenThree> {
                                                 Colors.white)),
                                     child: const Text("Ok",
                                         style: TextStyle(color: Colors.blue)),
-                                    onPressed: () =>
-                                      saveData(),
-                                  )),
+                                    onPressed: () {
+                                      saveData();
+                                    })),
                             ),
                           ]),
                         ),
