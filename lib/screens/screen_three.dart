@@ -143,7 +143,8 @@ class _ScreenThreeState extends State<ScreenThree> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20))),
-                    child: Column(
+                    child:
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [

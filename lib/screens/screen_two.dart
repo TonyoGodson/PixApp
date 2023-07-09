@@ -48,7 +48,13 @@ class _ScreenTwoState extends State<ScreenTwo> {
           ),
           onPressed: (){
             Navigator.of(context).pop();
-            },),),
+            },),
+        actions:  [Padding(
+            padding: EdgeInsets.only(right: 15.0),
+            child: GestureDetector(
+              onTap: (){},
+                child: const Icon(Icons.arrow_forward))),],
+      ),
       body: Center(
         child: Container(child:
         Column(
