@@ -14,7 +14,7 @@ class _ScreenFourState extends State<ScreenFour> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back),
-        title: Text("Screen Four"),),
-        body:Text("Screen Four"));
+        title: const Text("Screen Four"),),
+        body:const Center(child: Text("Screen Four")));
   }
 }

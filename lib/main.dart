@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pix_app/screens/home_screen.dart';
+import 'package:pix_app/screens/screen_four.dart';
 import 'package:pix_app/screens/screen_one.dart';
 import 'package:pix_app/screens/screen_three.dart';
 import 'package:pix_app/screens/screen_two.dart';
@@ -25,6 +26,7 @@ class _PixAppState extends State<PixApp> {
       ScreenOne.routeName : (BuildContext context) => ScreenOne(),
       ScreenTwo.routeName: (BuildContext context) => ScreenTwo(),
       ScreenThree.routeName: (BuildContext context) => ScreenThree(),
+      ScreenFour.routeName: (BuildContext context) => ScreenFour(),
     },
   );
   }

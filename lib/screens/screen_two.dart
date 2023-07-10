@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pix_app/screens/screen_four.dart';
 import 'dart:convert';
 
 import 'package:pix_app/screens/screen_three.dart';
@@ -52,7 +53,9 @@ class _ScreenTwoState extends State<ScreenTwo> {
         actions:  [Padding(
             padding: EdgeInsets.only(right: 15.0),
             child: GestureDetector(
-              onTap: (){},
+              onTap: (){
+                Navigator.of(context).pushNamed(ScreenFour.routeName);
+              },
                 child: const Icon(Icons.arrow_forward))),],
       ),
       body: Center(
