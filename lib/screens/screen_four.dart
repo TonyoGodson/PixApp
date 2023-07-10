@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/nav_drawer.dart';
+
 class ScreenFour extends StatefulWidget {
   static const routeName = '/screen_four';
   const ScreenFour({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class _ScreenFourState extends State<ScreenFour> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         leading: Icon(Icons.arrow_back),
         title: const Text("Screen Four"),),
