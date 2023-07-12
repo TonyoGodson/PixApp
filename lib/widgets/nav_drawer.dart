@@ -28,11 +28,13 @@ class _NavDrawerState extends State<NavDrawer> {
         //   color: Colors.green,
         // ),
         Container(
-          color: Colors.red,
+          // color: Colors.red,
           padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width * 1.2,
           child: ListView(children: [
+            const SizedBox(height: 20),
+            const Text('Main Item 1', style: TextStyle(color: Color(0xff757575)),),
             GestureDetector(
               onTap: (){
                 Navigator.pop(context);
@@ -74,12 +76,97 @@ class _NavDrawerState extends State<NavDrawer> {
                 child:  const Row(children: [
                   Icon(Icons.home_filled, color: Colors.grey,),
                   SizedBox(width: 10),
-                  Expanded(child: Text('Loans', style: TextStyle(color: Colors.grey),)),
+                  Expanded(child: Text('Item 1', style: TextStyle(color: Colors.grey),)),
                   Icon(Icons.arrow_forward_ios, size: 12.0,)
                 ],),
               ),
             ),
             const SizedBox(height: 15),
+            const Text('Main Item2', style: TextStyle(color: Color(0xff757575)),),
+            GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 60.0,
+                margin: const EdgeInsets.only(top: 10, right: 15.0),
+                padding: const EdgeInsets.only(left: 15, right: 20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    color: Colors.transparent
+                ),
+                child:  const Row(children: [
+                  Icon(Icons.home_filled, color: Colors.grey,),
+                  SizedBox(width: 10),
+                  Expanded(child: Text('Item 2', style: TextStyle(color: Colors.grey),)),
+                  Icon(Icons.arrow_forward_ios, size: 12.0,)
+                ],),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 60.0,
+                margin: const EdgeInsets.only(top: 10, right: 15.0),
+                padding: const EdgeInsets.only(left: 15, right: 20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    color: Colors.transparent
+                ),
+                child:  const Row(children: [
+                  Icon(Icons.home_filled, color: Colors.grey,),
+                  SizedBox(width: 10),
+                  Expanded(child: Text('Item 3', style: TextStyle(color: Colors.grey),)),
+                  Icon(Icons.arrow_forward_ios, size: 12.0,)
+                ],),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 60.0,
+                margin: const EdgeInsets.only(top: 10, right: 15.0),
+                padding: const EdgeInsets.only(left: 15, right: 20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    color: Colors.transparent
+                ),
+                child:  const Row(children: [
+                  Icon(Icons.home_filled, color: Colors.grey,),
+                  SizedBox(width: 10),
+                  Expanded(child: Text('Item 4', style: TextStyle(color: Colors.grey),)),
+                  Icon(Icons.arrow_forward_ios, size: 12.0,)
+                ],),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 60.0,
+                margin: const EdgeInsets.only(top: 10, right: 15.0),
+                padding: const EdgeInsets.only(left: 15, right: 20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    color: Colors.transparent
+                ),
+                child:  const Row(children: [
+                  Icon(Icons.home_filled, color: Colors.grey,),
+                  SizedBox(width: 10),
+                  Expanded(child: Text('Item 5', style: TextStyle(color: Colors.grey),)),
+                  Icon(Icons.arrow_forward_ios, size: 12.0,)
+                ],),
+              ),
+            ),
           ],),
         ),
       ],),
