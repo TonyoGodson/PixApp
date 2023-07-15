@@ -37,6 +37,8 @@ class _ClientTabState extends State<ClientTab> with SingleTickerProviderStateMix
                 child: TabBar(
                   controller: _tabController,
                   labelColor: Colors.black,
+                  labelPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0),
+                  labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   // labelPadding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
                   // isScrollable: true,
                   unselectedLabelColor: Colors.grey,
@@ -53,11 +55,13 @@ class _ClientTabState extends State<ClientTab> with SingleTickerProviderStateMix
                 controller: _tabController,
                 children: [
                   Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             const Text("RECENT INTERACTIONS"),
+                            SizedBox(width: 5.0),
                             Container(
                               width: MediaQuery.of(context).size.width * .07,
                               height: MediaQuery.of(context).size.width * .07,
@@ -65,7 +69,11 @@ class _ClientTabState extends State<ClientTab> with SingleTickerProviderStateMix
                                   shape: BoxShape.circle,
                                   color: Color(0xFF2D88D8)
                               ),
+                              child: Icon(Icons.add,
+                                color: Colors.white,
+                              ),
                             ),
+                            const Expanded(child: SizedBox()),
                             Container(
                               width: MediaQuery.of(context).size.width * .2,
                               height: MediaQuery.of(context).size.width * .068,
