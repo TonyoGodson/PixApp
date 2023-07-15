@@ -15,12 +15,14 @@ class _ScreenFourState extends State<ScreenFour> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back),
+        leading: IconButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.red,
         title: const Text("Screen Four"),),
-        body: ClientTab()
+        body: const ClientTab()
     );
   }
 }
